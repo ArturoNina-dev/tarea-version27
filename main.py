@@ -11,8 +11,8 @@ class ListaEnlazada:
         self.cabeza = None
 
     def agregar(self, codigo, descripcion):
-        # Tarea 1: Agrega el nodo al final sin perder los anteriores (20 pts)
         nuevo = Nodo(codigo, descripcion)
+        # 1. Agrega el nodo al final sin perder los anteriores
         if self.cabeza is None:
             self.cabeza = nuevo
         else:
@@ -24,7 +24,7 @@ class ListaEnlazada:
     def mostrar(self):
         actual = self.cabeza
         while actual is not None:
-            print(f"Código: {actual.codigo} | Descripción: {actual.descripcion}")
+            print(f"Código: {actual.codigo}, Descripción: {actual.descripcion}")
             actual = actual.siguiente
 
 class Pila:
@@ -32,34 +32,54 @@ class Pila:
         self.items = []
 
     def apilar(self, elemento):
-        # Tarea 2: Agrega el elemento a la cima (Parte de 15 pts)
+        # 2. Agrega el elemento a la cima
         self.items.append(elemento)
 
     def desapilar(self):
-        # Tarea 2: Devuelve y elimina el último elemento; controla pila vacía
+        # 2. Devuelve y elimina el último elemento; controla el caso de pila vacía
         if not self.items:
-            print("Advertencia: La pila está vacía.")
-            return None
+            return "Error: La pila está vacía"
         return self.items.pop()
 
-class ColaOptimizada:
-    """
-    Reto Individual (15 pts): 
-    Usar 'collections.deque' en lugar de una lista estándar con pop(0) 
-    optimiza la cola para retirar el elemento más antiguo de forma eficiente (O(1)).
-    """
+class Cola:
     def __init__(self):
+        # Reto individual: Usar deque para retirar el elemento más antiguo de manera eficiente O(1)
         self.items = deque()
 
     def encolar(self, elemento):
-        # Tarea 3: Agrega el elemento al final (Parte de 15 pts)
+        # 3. Agrega el elemento al final
         self.items.append(elemento)
 
     def desencolar(self):
-        # Tarea 3 & Reto: Devuelve y elimina el primer elemento (el más antiguo / FIFO)
+        # 3 y Reto individual: Devuelve y elimina el primer elemento (más antiguo) controlando cola vacía
         if not self.items:
-            print("Advertencia: La cola está vacía.")
-            return None
+            return "Error: La cola está vacía"
         return self.items.popleft()
 
+# 4. Pruebas con tres elementos
+if __name__ == "__main__":
+    print("=== 1. PRUEBA DE LISTA ENLAZADA ===")
+    lista = ListaEnlazada()
+    lista.agregar("E01", "Producto A")
+    lista.agregar("E02", "Producto B")
+    lista.agregar("E03", "Producto C")
+    lista.mostrar()
+
+    print("\n=== 2. PRUEBA DE PILA (LIFO: Last In, First Out) ===")
+    pila = Pila()
+    pila.apilar("Elemento 1")
+    pila.apilar("Elemento 2")
+    pila.apilar("Elemento 3")
+    print("Desapilado (último agregado):", pila.desapilar())  # Elemento 3
+    print("Desapilado (último agregado):", pila.desapilar())  # Elemento 2
+    print("Desapilado (último agregado):", pila.desapilar())  # Elemento 1
+
+    print("\n=== 3 Y RETO. PRUEBA DE COLA (FIFO: First In, First Out) ===")
+    cola = Cola()
+    cola.encolar("Turno 1")
+    cola.encolar("Turno 2")
+    cola.encolar("Turno 3")
+    print("Desencolado (más antiguo):", cola.desencolar())  # Turno 1
+    print("Desencolado (más antiguo):", cola.desencolar())  # Turno 2
+    print("Desencolado (más antiguo):", cola.desencolar())  # Turno 3
 
